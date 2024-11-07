@@ -64,205 +64,206 @@ def callback():
         abort(400)
 
     return 'OK'
-# Rich Menu 
-def create_rich_menu_1():
-    with ApiClient(configuration) as api_client:
-        line_bot_api = MessagingApi(api_client)
-        line_bot_blob_api = MessagingApiBlob(api_client)
-        # 定義點擊區域與觸發active
-        areas=[
-            RichMenuArea(
-                bounds=RichMenuBounds(
-                    x=0,
-                    y=0,
-                    width=833,
-                    height=843
-                ),
-                action=MessageAction(text="A")
-            ),
-            RichMenuArea(
-                bounds=RichMenuBounds(
-                    x=833,
-                    y=0,
-                    width=833,
-                    height=843
-                ),
-                action=MessageAction(text="B")
-            ),
-            RichMenuArea(
-                bounds=RichMenuBounds(
-                    x=1666,
-                    y=0,
-                    width=833,
-                    height=843
-                ),
-                action=MessageAction(text="C")
-            ),
-            RichMenuArea(
-                bounds=RichMenuBounds(
-                    x=0,
-                    y=843,
-                    width=833,
-                    height=843
-                ),
-                action=MessageAction(text="D")
-            ),
-            RichMenuArea(
-                bounds=RichMenuBounds(
-                    x=833,
-                    y=843,
-                    width=833,
-                    height=843
-                ),
-                action=MessageAction(text="E")
-            ),
-            RichMenuArea(
-                bounds=RichMenuBounds(
-                    x=1666,
-                    y=843,
-                    width=833,
-                    height=843
-                ),
-                action=MessageAction(text="F")
-            )
-        ]
-        # 定義 RichMenuRequest 物件
-        rich_menu_to_create = RichMenuRequest(
-            size=RichMenuSize(
-                width=2500,
-                height=1686
-            ),
-            selected=True,
-            name="圖文選單",
-            chatBarText="查看更多",
-            areas=areas
-        )
-        # create_rich_menu 方法建立物件,透過.rich_menu_id 拿到id
-        rich_menu_id = line_bot_api.create_rich_menu(
-            rich_menu_request=rich_menu_to_create
-        ).rich_menu_id
+
+# # Rich Menu 
+# def create_rich_menu_1():
+#     with ApiClient(configuration) as api_client:
+#         line_bot_api = MessagingApi(api_client)
+#         line_bot_blob_api = MessagingApiBlob(api_client)
+#         # 定義點擊區域與觸發active
+#         areas=[
+#             RichMenuArea(
+#                 bounds=RichMenuBounds(
+#                     x=0,
+#                     y=0,
+#                     width=833,
+#                     height=843
+#                 ),
+#                 action=MessageAction(text="A")
+#             ),
+#             RichMenuArea(
+#                 bounds=RichMenuBounds(
+#                     x=833,
+#                     y=0,
+#                     width=833,
+#                     height=843
+#                 ),
+#                 action=MessageAction(text="B")
+#             ),
+#             RichMenuArea(
+#                 bounds=RichMenuBounds(
+#                     x=1666,
+#                     y=0,
+#                     width=833,
+#                     height=843
+#                 ),
+#                 action=MessageAction(text="C")
+#             ),
+#             RichMenuArea(
+#                 bounds=RichMenuBounds(
+#                     x=0,
+#                     y=843,
+#                     width=833,
+#                     height=843
+#                 ),
+#                 action=MessageAction(text="D")
+#             ),
+#             RichMenuArea(
+#                 bounds=RichMenuBounds(
+#                     x=833,
+#                     y=843,
+#                     width=833,
+#                     height=843
+#                 ),
+#                 action=MessageAction(text="E")
+#             ),
+#             RichMenuArea(
+#                 bounds=RichMenuBounds(
+#                     x=1666,
+#                     y=843,
+#                     width=833,
+#                     height=843
+#                 ),
+#                 action=MessageAction(text="F")
+#             )
+#         ]
+#         # 定義 RichMenuRequest 物件
+#         rich_menu_to_create = RichMenuRequest(
+#             size=RichMenuSize(
+#                 width=2500,
+#                 height=1686
+#             ),
+#             selected=True,
+#             name="圖文選單",
+#             chatBarText="查看更多",
+#             areas=areas
+#         )
+#         # create_rich_menu 方法建立物件,透過.rich_menu_id 拿到id
+#         rich_menu_id = line_bot_api.create_rich_menu(
+#             rich_menu_request=rich_menu_to_create
+#         ).rich_menu_id
         
-        with open('./static/4_resized.jpg', 'rb') as image:
-            line_bot_blob_api.set_rich_menu_image(
-                rich_menu_id=rich_menu_id,
-                body=bytearray(image.read()),
-                _headers={'Content-Type': 'image/png'}
-            )
+#         with open('./static/4_resized.jpg', 'rb') as image:
+#             line_bot_blob_api.set_rich_menu_image(
+#                 rich_menu_id=rich_menu_id,
+#                 body=bytearray(image.read()),
+#                 _headers={'Content-Type': 'image/png'}
+#             )
         
-        line_bot_api.set_default_rich_menu(rich_menu_id)
+#         line_bot_api.set_default_rich_menu(rich_menu_id)
 
-def create_rich_menu_2():
-    with ApiClient(configuration) as api_client:
-        line_bot_api = MessagingApi(api_client)
-        line_bot_blob_api = MessagingApiBlob(api_client)
+# def create_rich_menu_2():
+#     with ApiClient(configuration) as api_client:
+#         line_bot_api = MessagingApi(api_client)
+#         line_bot_blob_api = MessagingApiBlob(api_client)
 
-        # Create rich menu
-        headers = {
-            'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN,
-            'Content-Type': 'application/json'
-        }
-        body = {
-            "size": {
-                "width": 2500,
-                "height": 1686
-            },
-            "selected": True,
-            "name": "圖文選單 1",
-            "chatBarText": "查看更多資訊",
-            "areas": [
-                {
-                "bounds": {
-                    "x": 0,
-                    "y": 0,
-                    "width": 833,
-                    "height": 843
-                },
-                "action": {
-                    "type": "message",
-                    "text": "範圍 1"
-                }
-                },
-                {
-                "bounds": {
-                    "x": 833,
-                    "y": 0,
-                    "width": 833,
-                    "height": 843
-                },
-                "action": {
-                    "type": "message",
-                    "text": "範圍 2"
-                }
-                },
-                {
-                "bounds": {
-                    "x": 1666,
-                    "y": 0,
-                    "width": 833,
-                    "height": 843
-                },
-                "action": {
-                    "type": "message",
-                    "text": "範圍 3"
-                }
-                },
-                {
-                "bounds": {
-                    "x": 0,
-                    "y": 843,
-                    "width": 833,
-                    "height": 843
-                },
-                "action": {
-                    "type": "message",
-                    "text": "範圍 4"
-                }
-                },
-                {
-                "bounds": {
-                    "x": 833,
-                    "y": 843,
-                    "width": 833,
-                    "height": 843
-                },
-                "action": {
-                    "type": "message",
-                    "text": "範圍 5"
-                }
-                },
-                {
-                "bounds": {
-                    "x": 1666,
-                    "y": 843,
-                    "width": 833,
-                    "height": 843
-                },
-                "action": {
-                    "type": "message",
-                    "text": "範圍 6"
-                }
-                }
-            ]
-        }
-        response = requests.post('https://api.line.me/v2/bot/richmenu', headers=headers, data=json.dumps(body).encode('utf-8'))
-        response = response.json()
-        print(response)
-        if "richMenuId" in response:
-            rich_menu_id = response["richMenuId"]
-        else:
-            print("richMenuId not found in response:", response)
+#         # Create rich menu
+#         headers = {
+#             'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN,
+#             'Content-Type': 'application/json'
+#         }
+#         body = {
+#             "size": {
+#                 "width": 2500,
+#                 "height": 1686
+#             },
+#             "selected": True,
+#             "name": "圖文選單 1",
+#             "chatBarText": "查看更多資訊",
+#             "areas": [
+#                 {
+#                 "bounds": {
+#                     "x": 0,
+#                     "y": 0,
+#                     "width": 833,
+#                     "height": 843
+#                 },
+#                 "action": {
+#                     "type": "message",
+#                     "text": "範圍 1"
+#                 }
+#                 },
+#                 {
+#                 "bounds": {
+#                     "x": 833,
+#                     "y": 0,
+#                     "width": 833,
+#                     "height": 843
+#                 },
+#                 "action": {
+#                     "type": "message",
+#                     "text": "範圍 2"
+#                 }
+#                 },
+#                 {
+#                 "bounds": {
+#                     "x": 1666,
+#                     "y": 0,
+#                     "width": 833,
+#                     "height": 843
+#                 },
+#                 "action": {
+#                     "type": "message",
+#                     "text": "範圍 3"
+#                 }
+#                 },
+#                 {
+#                 "bounds": {
+#                     "x": 0,
+#                     "y": 843,
+#                     "width": 833,
+#                     "height": 843
+#                 },
+#                 "action": {
+#                     "type": "message",
+#                     "text": "範圍 4"
+#                 }
+#                 },
+#                 {
+#                 "bounds": {
+#                     "x": 833,
+#                     "y": 843,
+#                     "width": 833,
+#                     "height": 843
+#                 },
+#                 "action": {
+#                     "type": "message",
+#                     "text": "範圍 5"
+#                 }
+#                 },
+#                 {
+#                 "bounds": {
+#                     "x": 1666,
+#                     "y": 843,
+#                     "width": 833,
+#                     "height": 843
+#                 },
+#                 "action": {
+#                     "type": "message",
+#                     "text": "範圍 6"
+#                 }
+#                 }
+#             ]
+#         }
+#         response = requests.post('https://api.line.me/v2/bot/richmenu', headers=headers, data=json.dumps(body).encode('utf-8'))
+#         response = response.json()
+#         print(response)
+#         if "richMenuId" in response:
+#             rich_menu_id = response["richMenuId"]
+#         else:
+#             print("richMenuId not found in response:", response)
 
-        # Upload rich menu image
-        with open('static/4_resized.jpg', 'rb') as image:
-            line_bot_blob_api.set_rich_menu_image(
-                rich_menu_id=rich_menu_id,
-                body=bytearray(image.read()),
-                _headers={'Content-Type': 'image/png'}
-            )
+#         # Upload rich menu image
+#         with open('static/4_resized.jpg', 'rb') as image:
+#             line_bot_blob_api.set_rich_menu_image(
+#                 rich_menu_id=rich_menu_id,
+#                 body=bytearray(image.read()),
+#                 _headers={'Content-Type': 'image/png'}
+#             )
 
-        line_bot_api.set_default_rich_menu(rich_menu_id)
+#         line_bot_api.set_default_rich_menu(rich_menu_id)
 
-create_rich_menu_1()
+# create_rich_menu_1()
 
 
 
